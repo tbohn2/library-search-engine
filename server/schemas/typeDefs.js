@@ -5,11 +5,11 @@ type User {
     username: String!
     email: String!
     password: String!
-    savedBooks: [Book]
+    savedBooks: [bookSchema]
 }
 
 type bookSchema {
-    authors: [{String!}]
+    authors: [String!]
     description: String!
     bookId: ID!
     image: String!
@@ -18,8 +18,9 @@ type bookSchema {
 }
 
 type Query {
-    user: [user] 
-    book: [bookSchema] 
+    users: [User] 
+    user(_id: String!): User
+    books: [bookSchema] 
 }
 `
 
