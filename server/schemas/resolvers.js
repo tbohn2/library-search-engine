@@ -9,7 +9,7 @@ const resolvers = {
         },
     },
     Mutation: {
-        login: async (email, password) => {
+        login: async (parent, { email, password }) => {
             const user = await User.findOne({ email: email });
             if (!user) {
                 return res.status(400).json({ message: "Can't find this user" });
@@ -21,7 +21,7 @@ const resolvers = {
             const token = signToken(user);
             return ({ token, user });
         },
-        addUser: async (username, email, password) => {
+        addUser: async (parent, { username, email, password }) => {
             const user = await User.create(username, email, password);
 
             if (!user) {
@@ -30,7 +30,7 @@ const resolvers = {
             const token = signToken(user);
             return ({ token, user });
         },
-        saveBook: async (parent, userId, bookData) => {
+        saveBook: async (parent, { userId, bookData }) => {
             try {
                 const updatedUser = await User.findOneAndUpdate(
                     { _id: userId },
@@ -43,7 +43,7 @@ const resolvers = {
                 return res.status(400).json(err);
             }
         },
-        removeBook: async (userId, bookId) => {
+        removeBook: async (parent, { userId, bookId }) => {
             const updatedUser = await User.findOneAndUpdate(
                 { _id: userId },
                 { $pull: { savedBooks: { bookId: bookId } } },
