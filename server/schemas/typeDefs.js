@@ -41,7 +41,7 @@ type Mutation {
     login(email, password): Auth
     addUser(username, email, password): Auth
     saveBook(userId, book: bookData): User
-    removeBook(bookId): User
+    removeBook(userId, bookId): User
 }
 `
 
