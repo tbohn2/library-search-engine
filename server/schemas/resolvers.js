@@ -42,8 +42,18 @@ const resolvers = {
                 console.log(err);
                 return res.status(400).json(err);
             }
+        },
+        removeBook: async (userId, bookId) => {
+            const updatedUser = await User.findOneAndUpdate(
+                { _id: userId },
+                { $pull: { savedBooks: { bookId: bookId } } },
+                { new: true }
+            );
+            if (!updatedUser) {
+                return res.status(404).json({ message: "Couldn't find user with this id!" });
+            }
+            return updatedUser;
         }
-        // removeBook(bookId): User
     }
 };
 
