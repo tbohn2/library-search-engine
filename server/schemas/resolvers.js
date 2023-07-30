@@ -29,8 +29,20 @@ const resolvers = {
             }
             const token = signToken(user);
             return ({ token, user });
+        },
+        saveBook: async (parent, userId, bookData) => {
+            try {
+                const updatedUser = await User.findOneAndUpdate(
+                    { _id: userId },
+                    { $addToSet: { savedBooks: bookData } },
+                    { new: true, runValidators: true }
+                );
+                return updatedUser;
+            } catch (err) {
+                console.log(err);
+                return res.status(400).json(err);
+            }
         }
-        // saveBook([authors], description, title, bookId, image, link): User
         // removeBook(bookId): User
     }
 };
