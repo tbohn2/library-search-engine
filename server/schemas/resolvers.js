@@ -25,7 +25,7 @@ const resolvers = {
             const user = await User.create(username, email, password);
 
             if (!user) {
-                return res.status(400).json({ message: 'Something is wrong!' });
+                throw new Error('Something is wrong!');
             }
             const token = signToken(user);
             return ({ token, user });

@@ -10,6 +10,7 @@ import {
 import { useMutation } from '@apollo/client';
 
 import Auth from '../utils/auth';
+import { searchGoogleBooks } from '../utils/API';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
 import { SAVE_BOOK } from '../utils/mutations';
 
@@ -60,6 +61,8 @@ const SearchBooks = () => {
     }
   };
 
+  const [saveBook, { loading, error }] = useMutation(SAVE_BOOK);
+
   // create function to handle saving a book to our database
   const handleSaveBook = async (userId, bookData) => {
     // find the book in `searchedBooks` state by the matching id
@@ -72,11 +75,10 @@ const SearchBooks = () => {
       return false;
     }
 
-    const [saveBook, { loading, error }] = useMutation(SAVE_BOOK);
 
     try {
-      const { data } = await saveBookMutation({
-        variables: { userId, book: bookData },
+      const { data } = await saveBook({
+        variables: { userId, bookData: bookToSave },
       });
       return data.saveBook;
     } catch (err) {
