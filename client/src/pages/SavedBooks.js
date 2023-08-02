@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+// Imports useQuery and useMutation from apollo client
 import { useQuery, useMutation } from '@apollo/client';
+// Imports GET_ME query from queries
 import { GET_ME } from '../utils/queries';
+// Imports REMOVE_BOOK from mutations
 import { REMOVE_BOOK } from '../utils/mutations';
 import {
   Container,
@@ -25,6 +28,7 @@ const SavedBooks = () => {
   // use this to determine if `useEffect()` hook needs to run again
   const userDataLength = Object.keys(userData).length;
 
+  // Declares removeBook function using REMOVE_BOOK mutation
   const [removeBook, { error }] = useMutation(REMOVE_BOOK);
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
@@ -35,8 +39,8 @@ const SavedBooks = () => {
       return false;
     }
 
-
     try {
+      // Removes book using the bookId
       const { data } = await removeBook({
         variables: { userId: userData._id, bookId },
       });

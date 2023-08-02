@@ -12,12 +12,16 @@ import SearchBooks from './pages/SearchBooks';
 import SavedBooks from './pages/SavedBooks';
 import Navbar from './components/Navbar';
 
+// Declares variable to lead to graphql endpoint where gql will run
 const httpLink = createHttpLink({
   uri: '/graphql',
 });
 
+// Sets the request header with the auth token 
 const authLink = setContext((_, { headers }) => {
+  // Finds token in local storage
   const token = localStorage.getItem('id_token');
+  // Returns header with the token
   return {
     headers: {
       ...headers,
@@ -26,6 +30,7 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+// Creates new apollo client used to interact with graphql and apollo server
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),

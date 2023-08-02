@@ -7,11 +7,13 @@ import {
   Card,
   Row
 } from 'react-bootstrap';
+// Imports useMutation from apollo client
 import { useMutation } from '@apollo/client';
 
 import Auth from '../utils/auth';
 import { searchGoogleBooks } from '../utils/API';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
+// Imports SAVE_BOOK from mutations
 import { SAVE_BOOK } from '../utils/mutations';
 
 const SearchBooks = () => {
@@ -61,6 +63,7 @@ const SearchBooks = () => {
     }
   };
 
+  // Declares saveBook function with SAVE_BOOK mutation
   const [saveBook, { loading, error }] = useMutation(SAVE_BOOK);
 
   // create function to handle saving a book to our database
@@ -75,8 +78,8 @@ const SearchBooks = () => {
       return false;
     }
 
-
     try {
+      // Calls saveBook function and updates user with userId param and bookData
       const { data } = await saveBook({
         variables: { userId, bookData: bookToSave },
       });
