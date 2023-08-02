@@ -1,5 +1,7 @@
+// Imports gql from apoll server
 const { gql } = require('apollo-server-express')
 
+// Types, queries and mutations defined
 const typeDefs = gql`
 type User {
     _id: ID!

@@ -1,12 +1,15 @@
 const express = require('express');
+// Imports apollo server
 const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
 const db = require('./config/connection');
 // const routes = require('./routes');
+// Imports typeDefs and resolvers
 const { typeDefs, resolvers } = require('./schemas');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+// Creates new apollo server using typeDefs and resolvers defined as server
 const server = new ApolloServer({
   typeDefs,
   resolvers,
@@ -26,6 +29,7 @@ app.get('/', (req, res) => {
 // app.use(routes);
 
 const startApolloServer = async () => {
+  // Starts apollo server
   await server.start();
   server.applyMiddleware({ app });
 
